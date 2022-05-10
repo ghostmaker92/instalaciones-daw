@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = "bento/ubuntu-20.04"
+  
+  config.vm.network "forwarded_port", guest: 80, host: 8000, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+
+  config.vm.provision "shell", inline: <<-SHELL
+     apt-get update
+     apt-get install -y apache2
+     apt-get install -y git
+     apt-get install -y python3.9
+     apt-get install -y python3-venv
+  SHELL
+
+end
